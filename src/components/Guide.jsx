@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Lottie from "lottie-react";
 import chief from "../assets/guide.json";
-import TerminalTextBubble from "./TerminalTextBubble"; // Import TerminalTextBubble
-import '../styles/guide.css'; // Import CSS for styling
-import ChatBubble from "../components/ChatBubble"
+import TerminalTextBubble from "./TerminalTextBubble";
+import '../styles/guide.css';
+import ChatBubble from "./ChatBubble";
 
 const steps = [
     "Welcome to the technical guide!",
@@ -16,9 +16,19 @@ const steps = [
 
 const Guide = () => {
     const [currentStep, setCurrentStep] = useState(0);
-    const [showTerminal, setShowTerminal] = useState(true); // Set showTerminal to true by default
+    const [showTerminal, setShowTerminal] = useState(true);
 
-    const handleClick = () => {
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (currentStep < steps.length - 1) {
+                setCurrentStep(currentStep + 1);
+            }
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, [currentStep]);
+
+    const handleNextClick = () => {
         if (currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
         }
@@ -27,29 +37,35 @@ const Guide = () => {
     const style = {
         width: "100%",
         height: "auto",
-        maxWidth: "400px", // Adjust max-width as needed
+        maxWidth: "400px",
         margin: "auto",
     };
 
+    const mobileStyle = {
+        width: "100%",
+        height: "auto",
+        maxWidth: "100%",
+    };
+
     return (
-        <div className="guide-container" onClick={handleClick}>
+        <div className="guide-container">
             <div className="lottie-container slide-fade-in-animation">
                 <Lottie
                     animationData={chief}
                     loop={false}
                     autoplay={true}
-                    style={style}
+                    style={window.innerWidth <= 768 ? mobileStyle : style}
                 />
-                {/* <ChatBubble /> */}
-
             </div>
             {showTerminal && (
                 <div className="another-component">
-                    <TerminalTextBubble text={steps[currentStep]} />
+                    <TerminalTextBubble
+                        text={steps[currentStep]}
+                        onNextClick={handleNextClick}
+                        buttonText={currentStep === steps.length - 1 ? "Done!" : "Next"}
+                    />
                 </div>
             )}
-
-
         </div>
     );
 };
