@@ -1,0 +1,27 @@
+.terminal-text-bubble {
+    background-color: white;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 0, 38, 0.5);
+    max-width: 600px;
+    /* Increase max-width */
+    margin: 20px auto;
+    text-align: left;
+    white-space: pre-line;
+    /* Preserve whitespace for multi-line text */
+    font-size: 1.2em;
+    /* Increase font size */
+    opacity: 0;
+    /* Start with opacity 0 for fade-in effect */
+    animation: fadeIn 3s forwards;
+    /* Apply fade-in animation */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
