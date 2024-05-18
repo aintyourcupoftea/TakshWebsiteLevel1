@@ -3,7 +3,6 @@ import Lottie from "lottie-react";
 import chief from "../assets/guide.json";
 import TerminalTextBubble from "./TerminalTextBubble";
 import '../styles/guide.css';
-import ChatBubble from "./ChatBubble";
 
 const steps = [
     "Welcome to the technical guide!",
@@ -16,21 +15,22 @@ const steps = [
 
 const Guide = () => {
     const [currentStep, setCurrentStep] = useState(0);
-    const [showTerminal, setShowTerminal] = useState(true);
+    const [instructions, setInstructions] = useState([steps[0]]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (currentStep < steps.length - 1) {
-                setCurrentStep(currentStep + 1);
-            }
-        }, 5000);
-
-        return () => clearTimeout(timer);
+        if (currentStep < steps.length - 1) {
+            const timer = setTimeout(() => {
+                handleNextClick();
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
     }, [currentStep]);
 
     const handleNextClick = () => {
         if (currentStep < steps.length - 1) {
-            setCurrentStep(currentStep + 1);
+            const nextStep = currentStep + 1;
+            setCurrentStep(nextStep);
+            setInstructions((prevInstructions) => [...prevInstructions, steps[nextStep]]);
         }
     };
 
@@ -57,10 +57,10 @@ const Guide = () => {
                     style={window.innerWidth <= 768 ? mobileStyle : style}
                 />
             </div>
-            {showTerminal && (
+            {instructions && (
                 <div className="another-component">
                     <TerminalTextBubble
-                        text={steps[currentStep]}
+                        instructions={instructions}
                         onNextClick={handleNextClick}
                         buttonText={currentStep === steps.length - 1 ? "Done!" : "Next"}
                     />

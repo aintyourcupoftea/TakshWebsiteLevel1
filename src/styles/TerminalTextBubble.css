@@ -1,70 +1,47 @@
 .terminal-text-bubble {
     background-color: #282c34;
-    /* Terminal background color */
     color: greenyellow;
-    /* Text color */
     border-radius: 5px;
     padding: 20px;
     width: 100%;
-    /* Width remains 100% */
     max-width: 600px;
-    /* Max-width remains fixed for desktop */
-    height: 200px;
-    /* Fixed height */
     overflow-y: auto;
-    /* Scrollable content if it overflows */
     position: relative;
-    /* Ensure relative positioning for button placement */
-}
-
-@media only screen and (max-width: 600px) {
-    .terminal-text-bubble {
-        width: 500px;
-        /* Remove max-width for mobile */
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .terminal-text-bubble {
-        width: 400px;
-        /* Remove max-width for mobile */
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    .terminal-text-bubble {
-        width: 300px;
-        /* Remove max-width for mobile */
-    }
-}
-
-@media only screen and (max-width: 300px) {
-    .terminal-text-bubble {
-        width: 500px;
-        /* Remove max-width for mobile */
-    }
+    box-sizing: border-box;
+    /* Ensure padding is included in width/height */
 }
 
 .terminal-text-bubble p {
     margin: 0;
     font-size: 16px;
-    /* Adjust font size as needed */
     white-space: pre-wrap;
-    /* Preserve white spaces and wrap lines */
+}
+
+.terminal-text-bubble .button-container {
+    margin-top: 10px;
+    text-align: right;
 }
 
 .terminal-text-bubble button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
     background-color: greenyellow;
-    /* Button background color */
     color: #282c34;
-    /* Button text color */
     border: none;
     border-radius: 3px;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 16px;
-    /* Adjust font size as needed */
+}
+
+@media screen and (max-width: 768px) {
+    .terminal-text-bubble {
+        width: 500px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    .terminal-text-bubble {
+        width: 400px;
+    }
+
 }
