@@ -1,55 +1,38 @@
 .guide-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    padding: 20px;
+    flex-wrap: wrap;
+    /* Allow wrapping of elements for smaller screens */
 }
 
 .lottie-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    opacity: 0;
-    /* Start with opacity 0 */
-    transform: translateX(-100px);
-    /* Start slightly off the screen to the left */
-    animation: slideFadeIn 1s forwards;
-    /* Apply slide-fade-in animation */
+    flex: 1;
+    max-width: 400px;
+    margin-right: 20px;
 }
 
 .another-component {
-    width: 100%;
-    margin-top: 20px;
-    padding: 20px;
-    /* Adjust spacing as needed */
+    flex: 1;
+    max-width: 600px;
 }
 
-@media (min-width: 768px) {
+/* Media query for mobile devices */
+@media (max-width: 768px) {
     .guide-container {
-        flex-direction: row;
-        justify-content: flex-start;
-        /* Align to the left */
+        flex-direction: column;
+        /* Stack elements vertically on smaller screens */
+        align-items: center;
     }
 
-    .lottie-container {
-        width: 35%;
-        justify-content: flex-start;
-        /* Align to the left */
-    }
-
+    .lottie-container,
     .another-component {
-        width: 65%;
-        margin-top: 0;
-        margin-left: 20px;
-        /* Adjust spacing as needed */
-    }
-}
-
-/* Slide-fade-in animation */
-@keyframes slideFadeIn {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-        /* Move to original position */
+        margin-right: 0;
+        /* Remove right margin */
+        max-width: 100%;
+        /* Allow full width */
+        flex: none;
+        /* Reset flex for individual elements */
     }
 }
