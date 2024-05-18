@@ -20,7 +20,8 @@ const Guide = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [instructions, setInstructions] = useState([steps[0]]);
     const [showMysteryBox, setShowMysteryBox] = useState(false);
-    const [currentAnimation, setCurrentAnimation] = useState(mysteryAnimation1); // State to hold the current animation
+    const [currentAnimation, setCurrentAnimation] = useState(mysteryAnimation1);
+    const [boxOpened, setBoxOpened] = useState(false);
     const animationRef = useRef(null);
 
     useEffect(() => {
@@ -38,12 +39,13 @@ const Guide = () => {
             setCurrentStep(nextStep);
             setInstructions((prevInstructions) => [...prevInstructions, steps[nextStep]]);
         } else {
-            setShowMysteryBox(true);
+            setShowMysteryBox(true); // Show the box only when the last step is reached
         }
     };
 
     const handleMysteryBoxClick = () => {
-        setCurrentAnimation(mysteryAnimation2); // Switch to the second animation
+        setCurrentAnimation(mysteryAnimation2);
+        setBoxOpened(true);
     };
 
     const style = {
@@ -62,16 +64,24 @@ const Guide = () => {
     return (
         <div className="guide-container">
             <div className="content-container">
-                {showMysteryBox && (
+                {showMysteryBox && ( // Only display encouragement-message if showMysteryBox is true
                     <div className="encouragement-message">
-                        Curiosity is your superpower! <br /> Tap the box and uncover the wonders within. 🎁
+                        {boxOpened ? (
+                            "Complete the projects before timer runs out! ⏳"
+                        ) : (
+                            <>
+                                Curiosity is your superpower! <br />
+                                Tap the box and uncover the wonders within. 🎁
+                            </>
+                        )}
                     </div>
                 )}
+
                 {showMysteryBox ? (
                     <div className="lottie-container slide-fade-in-animation">
                         <Lottie
-                            animationData={currentAnimation} // Use the current animation data
-                            loop={currentAnimation === mysteryAnimation1} // Loop only for the first animation
+                            animationData={currentAnimation}
+                            loop={currentAnimation === mysteryAnimation1}
                             autoplay={true}
                             style={window.innerWidth <= 768 ? mobileStyle : style}
                             ref={animationRef}
