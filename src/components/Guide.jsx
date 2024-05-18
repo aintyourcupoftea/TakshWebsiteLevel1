@@ -41,6 +41,12 @@ const Guide = () => {
         margin: "auto",
     };
 
+    const mobileStyle = {
+        width: "100%",
+        height: "auto",
+        maxWidth: "100%",
+    };
+
     return (
         <div className="guide-container">
             <div className="lottie-container slide-fade-in-animation">
@@ -48,7 +54,7 @@ const Guide = () => {
                     animationData={chief}
                     loop={false}
                     autoplay={true}
-                    style={style}
+                    style={window.innerWidth <= 768 ? mobileStyle : style}
                 />
             </div>
             {showTerminal && (

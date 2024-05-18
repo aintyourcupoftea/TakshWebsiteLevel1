@@ -35,4 +35,11 @@
         flex: none;
         /* Reset flex for individual elements */
     }
+
+    .lottie-container {
+        width: 100%;
+        max-width: 100%;
+        /* Make the Lottie animation take full width on mobile */
+        height: auto;
+    }
 }
