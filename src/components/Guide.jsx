@@ -7,12 +7,13 @@ import TerminalTextBubble from "./TerminalTextBubble";
 import '../styles/guide.css';
 
 const steps = [
-    "Welcome to the technical guide!",
-    "Step 1: Open your terminal.",
-    "Step 2: Navigate to the project directory.",
-    "Step 3: Run 'npm install' to install dependencies.",
-    "Step 4: Run 'npm start' to start the development server.",
-    "Enjoy coding!"
+    "Hey 👋",
+    "Welcome to Taksh!",
+    "You are about to embark on a journey of coding and fun.",
+    "You'll be assigned 5 simple projects to complete.",
+    "You have 48 hours to complete them.",
+    "Once you're done, you'll get a special reward.",
+    "Are you ready? Let's get started! 🚀",
 ];
 
 const Guide = () => {
@@ -60,33 +61,40 @@ const Guide = () => {
 
     return (
         <div className="guide-container">
-            {showMysteryBox ? (
-                <div className="lottie-container slide-fade-in-animation">
-                    <Lottie
-                        animationData={currentAnimation} // Use the current animation data
-                        loop={currentAnimation === mysteryAnimation1} // Loop only for the first animation
-                        autoplay={true}
-                        style={window.innerWidth <= 768 ? mobileStyle : style}
-                        ref={animationRef}
-                        onClick={handleMysteryBoxClick}
-                    />
-                </div>
-            ) : (
-                <div className="lottie-container slide-fade-in-animation">
-                    <Lottie
-                        animationData={chief}
-                        loop={false}
-                        autoplay={true}
-                        style={window.innerWidth <= 768 ? mobileStyle : style}
-                    />
-                </div>
-            )}
+            <div className="content-container">
+                {showMysteryBox && (
+                    <div className="encouragement-message">
+                        Curiosity is your superpower! <br /> Tap the box and uncover the wonders within. 🎁
+                    </div>
+                )}
+                {showMysteryBox ? (
+                    <div className="lottie-container slide-fade-in-animation">
+                        <Lottie
+                            animationData={currentAnimation} // Use the current animation data
+                            loop={currentAnimation === mysteryAnimation1} // Loop only for the first animation
+                            autoplay={true}
+                            style={window.innerWidth <= 768 ? mobileStyle : style}
+                            ref={animationRef}
+                            onClick={handleMysteryBoxClick}
+                        />
+                    </div>
+                ) : (
+                    <div className="lottie-container slide-fade-in-animation">
+                        <Lottie
+                            animationData={chief}
+                            loop={false}
+                            autoplay={true}
+                            style={window.innerWidth <= 768 ? mobileStyle : style}
+                        />
+                    </div>
+                )}
+            </div>
             {instructions && (
                 <div className="another-component">
                     <TerminalTextBubble
                         instructions={instructions}
                         onNextClick={handleNextClick}
-                        buttonText={currentStep === steps.length - 1 ? "Done!" : "Next"}
+                        buttonText={currentStep === steps.length - 1 ? "I am Ready!" : "Next"}
                     />
                 </div>
             )}
