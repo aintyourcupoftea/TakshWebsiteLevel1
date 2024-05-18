@@ -1,10 +1,13 @@
+import React from 'react';
 import '../styles/TerminalTextBubble.css';
 import NextButton from './NextButton';
 
-const TerminalTextBubble = ({ text, onNextClick, buttonText }) => {
+const TerminalTextBubble = ({ instructions, onNextClick, buttonText }) => {
     return (
         <div className="terminal-text-bubble">
-            <p>{text}</p>
+            {instructions.map((instruction, index) => (
+                <p key={index}>{instruction}</p>
+            ))}
             <div className="button-container">
                 <NextButton onClick={onNextClick} buttonText={buttonText} />
             </div>
