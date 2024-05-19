@@ -4,6 +4,7 @@ import chief from "../assets/guide.json";
 import mysteryAnimation1 from "../assets/mysterybox_part1.json"; // First animation
 import mysteryAnimation2 from "../assets/mysterybox.json"; // Second animation
 import TerminalTextBubble from "./TerminalTextBubble";
+import Timer from './Timer'; // Import Timer component
 import '../styles/guide.css';
 
 const steps = [
@@ -22,6 +23,7 @@ const Guide = () => {
     const [showMysteryBox, setShowMysteryBox] = useState(false);
     const [currentAnimation, setCurrentAnimation] = useState(mysteryAnimation1);
     const [boxOpened, setBoxOpened] = useState(false);
+    const [timerStarted, setTimerStarted] = useState(false); // State to manage timer start
     const animationRef = useRef(null);
 
     useEffect(() => {
@@ -46,6 +48,7 @@ const Guide = () => {
     const handleMysteryBoxClick = () => {
         setCurrentAnimation(mysteryAnimation2);
         setBoxOpened(true);
+        setTimerStarted(true); // Start the timer when the box is opened
     };
 
     const style = {
@@ -64,10 +67,15 @@ const Guide = () => {
     return (
         <div className="guide-container">
             <div className="content-container">
-                {showMysteryBox && ( // Only display encouragement-message if showMysteryBox is true
+                {showMysteryBox && (
                     <div className="encouragement-message">
                         {boxOpened ? (
-                            "Complete the projects before timer runs out! ⏳"
+                            <>
+                                <div className="timer-text">
+                                    <p>Complete the projects before timer runs out! ⏳</p>
+                                    {timerStarted && <Timer startFrom={48 * 60 * 60} />} {/* Render Timer when started */}
+                                </div>
+                            </> 
                         ) : (
                             <>
                                 Curiosity is your superpower! <br />
@@ -87,6 +95,7 @@ const Guide = () => {
                             ref={animationRef}
                             onClick={handleMysteryBoxClick}
                         />
+                        
                     </div>
                 ) : (
                     <div className="lottie-container slide-fade-in-animation">
