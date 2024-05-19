@@ -1,5 +1,7 @@
 import React from 'react';
 import logo from '../assets/taksh logo white.svg';
+import Timer from './Timer';
+
 
 const NavBar = () => {
     return (

@@ -1,4 +1,4 @@
-.terminal-text-bubble {
+ .terminal-text-bubble {
     background-color: #282c34;
     color: greenyellow;
     border-radius: 5px;
@@ -41,7 +41,21 @@
 
 @media screen and (max-width: 500px) {
     .terminal-text-bubble {
-        width: 400px;
+        width: 350px;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .terminal-text-bubble {
+        width: 250px;
+    }
+
+}
+
+@media screen and (max-width: 300px) {
+    .terminal-text-bubble {
+        width: 150px;
     }
 
 }

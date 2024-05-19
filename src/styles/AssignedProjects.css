@@ -1,0 +1,13 @@
+.project-buttons {
+    background-color:greenyellow;
+    color: black;
+    cursor: pointer;
+    border: none;
+    margin: 15px;
+    font-weight: bold;
+}
+
+.project-buttons:hover {
+    color: black;
+    background-color: whitesmoke;
+}
