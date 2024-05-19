@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import Lottie from "lottie-react";
 import chief from "../assets/guide.json";
-import mysteryAnimation1 from "../assets/mysterybox_part1.json"; // First animation
-import mysteryAnimation2 from "../assets/mysterybox.json"; // Second animation
+import mysteryAnimation1 from "../assets/mysterybox_part1.json";
+import mysteryAnimation2 from "../assets/mysterybox.json";
+import mysteryBoxStatic from "../assets/mysteryboxstatic.json";
 import TerminalTextBubble from "./TerminalTextBubble";
-import Timer from './Timer'; // Import Timer component
-import RandomProjects from '../components/AssignedProjects'; // Import RandomProjects component
+import Timer from './Timer';
+import RandomProjects from '../components/AssignedProjects';
 import '../styles/guide.css';
 import Arrow from "../components/Arrow";
+import '../styles/afterProjectsAssignned.css';
+
+// Make sure to import your projects data here
+import projectsData from '../assets/projects.json';
 
 const steps = [
     "Hey 👋",
@@ -25,17 +30,57 @@ const Guide = () => {
     const [showMysteryBox, setShowMysteryBox] = useState(false);
     const [currentAnimation, setCurrentAnimation] = useState(mysteryAnimation1);
     const [boxOpened, setBoxOpened] = useState(false);
-    const [timerStarted, setTimerStarted] = useState(false); // State to manage timer start
+    const [timerStarted, setTimerStarted] = useState(false);
+    const [projectsAssigned, setProjectsAssigned] = useState(false);
     const animationRef = useRef(null);
 
     useEffect(() => {
-        if (currentStep < steps.length - 1) {
+        const assignedProjects = localStorage.getItem("assignedProjects");
+        if (assignedProjects) {
+            setProjectsAssigned(true);
+            setTimerStarted(true);
+        } else {
+            const savedState = localStorage.getItem("guideState");
+            if (savedState) {
+                const {
+                    savedStep,
+                    savedInstructions,
+                    savedBoxOpened,
+                    savedShowMysteryBox,
+                    savedTimerStarted
+                } = JSON.parse(savedState);
+
+                setCurrentStep(savedStep);
+                setInstructions(savedInstructions);
+                setBoxOpened(savedBoxOpened);
+                setShowMysteryBox(savedShowMysteryBox);
+                setTimerStarted(savedTimerStarted);
+
+                if (savedBoxOpened) {
+                    setCurrentAnimation(mysteryAnimation2);
+                }
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (currentStep < steps.length - 1 && !boxOpened) {
             const timer = setTimeout(() => {
                 handleNextClick();
             }, 5000);
             return () => clearTimeout(timer);
         }
-    }, [currentStep]);
+    }, [currentStep, boxOpened]);
+
+    useEffect(() => {
+        localStorage.setItem("guideState", JSON.stringify({
+            savedStep: currentStep,
+            savedInstructions: instructions,
+            savedBoxOpened: boxOpened,
+            savedShowMysteryBox: showMysteryBox,
+            savedTimerStarted: timerStarted
+        }));
+    }, [currentStep, instructions, boxOpened, showMysteryBox, timerStarted]);
 
     const handleNextClick = () => {
         if (currentStep < steps.length - 1) {
@@ -43,14 +88,24 @@ const Guide = () => {
             setCurrentStep(nextStep);
             setInstructions((prevInstructions) => [...prevInstructions, steps[nextStep]]);
         } else {
-            setShowMysteryBox(true); // Show the box only when the last step is reached
+            setShowMysteryBox(true);
         }
     };
 
     const handleMysteryBoxClick = () => {
-        setCurrentAnimation(mysteryAnimation2);
-        setBoxOpened(true);
-        setTimerStarted(true); // Start the timer when the box is opened
+        if (!boxOpened) {
+            setCurrentAnimation(mysteryAnimation2);
+            setBoxOpened(true);
+            setTimerStarted(true);
+            const assignedProjects = getRandomProjects(projectsData);
+            localStorage.setItem("assignedProjects", JSON.stringify(assignedProjects));
+        }
+    };
+
+    const getRandomProjects = (projects) => {
+        const keys = Object.keys(projects);
+        const shuffled = keys.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 5).map(key => ({ name: key, link: projects[key] }));
     };
 
     const style = {
@@ -68,53 +123,82 @@ const Guide = () => {
 
     return (
         <div className="guide-container">
-            <div className="content-container">
-                {showMysteryBox && (
-                    <div className="encouragement-message">
-                        {boxOpened ? (
-                            <>
-                                <div className="timer-text">
-                                {timerStarted && <Timer startFrom={48 * 60 * 60} />} {/* Render Timer when started */}
 
-                                    <p>Complete the projects before timer runs out! ⏳</p>
-                                </div>
-                                {/* Show the RandomProjects component only after the box is opened */}
-                                <Arrow />
-                                <RandomProjects />
-                            </> 
-                        ) : (
-                            <>
-                                Curiosity is your superpower! <br />
-                                Tap the box and uncover the wonders within. 🎁
-                            </>
-                        )}
+            {projectsAssigned ? (
+                <div className="assigned-projects-view">
+                    <div className="top-section">
+                        <div className="mystery-box-container">
+                            <Lottie
+                                animationData={mysteryBoxStatic}
+                                loop={true}
+                                autoplay={true}
+                                style={window.innerWidth <= 768 ? mobileStyle : style}
+                            />
+                        </div>
+                        <div className="terminal-container">
+                            <TerminalTextBubble
+                                instructions={steps}
+                                onNextClick={() => { }}
+                                buttonText={"Projects Completed!"}
+                            />
+                        </div>
                     </div>
-                )}
+                    <div className="timer-section">
+                        <p style={{ fontWeight: 'bold' }}>Complete the projects before the timer runs out! ⏳</p>
+                        <div className="projects-container"> {/* Projects above the timer */}
+                            <RandomProjects />
+                        </div>
+                        <Timer startFrom={48 * 60 * 60} />
+                    </div>
+                </div>
+            ) : (
+                <div className="content-container">
+                    {showMysteryBox && (
+                        <div className="encouragement-message">
+                            {boxOpened ? (
+                                <>
+                                    <div className="timer-text">
+                                        {timerStarted && <Timer startFrom={48 * 60 * 60} />}
+                                        <p>Complete the projects before timer runs out! ⏳</p>
+                                    </div>
+                                    <Arrow />
+                                    <RandomProjects />
+                                </>
+                            ) : (
+                                <>
+                                    Curiosity is your superpower! <br />
+                                    Tap the box and uncover the wonders within. 🎁
+                                </>
+                            )}
+                        </div>
+                    )}
 
-                {showMysteryBox ? (
-                    <div className="lottie-container slide-fade-in-animation">
-                        <Lottie
-                            animationData={currentAnimation}
-                            loop={currentAnimation === mysteryAnimation1}
-                            autoplay={true}
-                            style={window.innerWidth <= 768 ? mobileStyle : style}
-                            ref={animationRef}
-                            onClick={handleMysteryBoxClick}
-                        />
-                        
-                    </div>
-                ) : (
-                    <div className="lottie-container slide-fade-in-animation">
-                        <Lottie
-                            animationData={chief}
-                            loop={false}
-                            autoplay={true}
-                            style={window.innerWidth <= 768 ? mobileStyle : style}
-                        />
-                    </div>
-                )}
-            </div>
-            {instructions && (
+                    {showMysteryBox ? (
+                        <div className="lottie-container slide-fade-in-animation">
+                            <Lottie
+                                animationData={currentAnimation}
+                                loop={currentAnimation === mysteryAnimation1}
+                                autoplay={true}
+                                style={window.innerWidth <= 768 ? mobileStyle : style}
+                                ref={animationRef}
+                                onClick={handleMysteryBoxClick}
+                            />
+
+                        </div>
+                    ) : (
+                        <div className="lottie-container slide-fade-in-animation">
+                            <Lottie
+                                animationData={chief}
+                                loop={false}
+                                autoplay={true}
+                                style={window.innerWidth <= 768 ? mobileStyle : style}
+                            />
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {!projectsAssigned && instructions && (
                 <div className="another-component">
                     <TerminalTextBubble
                         instructions={instructions}
@@ -127,4 +211,4 @@ const Guide = () => {
     );
 };
 
-export default Guide;
+export default Guide; 
