@@ -10,6 +10,7 @@ import RandomProjects from '../components/AssignedProjects';
 import '../styles/guide.css';
 import Arrow from "../components/Arrow";
 import '../styles/afterProjectsAssignned.css';
+import '../styles/styles.css';
 
 // Make sure to import your projects data here
 import projectsData from '../assets/projects.json';
@@ -144,7 +145,7 @@ const Guide = () => {
                         </div>
                     </div>
                     <div className="timer-section">
-                        <p style={{ fontWeight: 'bold' }}>Complete the projects before the timer runs out! ⏳</p>
+                        <p className="encouragement-message-2" style={{ fontWeight: 'bold' }}>Complete the projects before the timer runs out! ⏳</p>
                         <div className="projects-container"> {/* Projects above the timer */}
                             <RandomProjects />
                         </div>
@@ -165,10 +166,10 @@ const Guide = () => {
                                     <RandomProjects />
                                 </>
                             ) : (
-                                <>
+                                <div className="encouragement-message-1">
                                     Curiosity is your superpower! <br />
                                     Tap the box and uncover the wonders within. 🎁
-                                </>
+                                </div>
                             )}
                         </div>
                     )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from './components/NavBar';
 import Guide from './components/Guide';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <>
       <NavBar />
       <Guide />
+      <Footer />
     </>
   );
 }
