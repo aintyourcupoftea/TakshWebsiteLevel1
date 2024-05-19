@@ -1,13 +1,15 @@
 import React from 'react';
 import NavBar from './components/NavBar';
 import Guide from './components/Guide';
-import ChatBubble from './components/ChatBubble';
+import Footer from './components/Footer';
+
 
 function App() {
   return (
     <>
       <NavBar />
       <Guide />
+      <Footer />
     </>
   );
 }

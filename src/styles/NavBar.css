@@ -1,0 +1,10 @@
+@font-face {
+    font-family: "Taksh";
+    src: local("FMBolyarSansPro-400"),
+        url("../fonts/FMBolyarSansPro-400.ttf") format("truetype");
+}
+
+.taksh {
+    font-family: "Taksh", sans-serif;
+    color: white;
+}

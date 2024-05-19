@@ -1,3 +1,8 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
 .guide-container {
     display: flex;
     justify-content: center;
@@ -22,6 +27,7 @@
 .another-component {
     flex: 1;
     max-width: 600px;
+    font-family: "Code", sans-serif;
 }
 
 /* Media query for mobile devices */
@@ -67,40 +73,56 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    
+
 }
 
-.timer-text{
+.timer-text {
     margin-top: 30%;
 }
-@media screen and (max-width: 900px){
-    .timer-text{
+
+@media screen and (max-width: 900px) {
+    .timer-text {
         margin-top: 50%;
     }
 }
 
 
-@media screen and (max-width: 768px){
-    .timer-text{
+@media screen and (max-width: 768px) {
+    .timer-text {
         margin-top: -25%;
     }
 }
 
 
-@media screen and (max-width: 500px){
-    .timer-text{
+@media screen and (max-width: 500px) {
+    .timer-text {
         margin-top: -25%;
     }
 }
 
-@media screen and (max-width: 400px){
-    .timer-text{
-
-    }
+@media screen and (max-width: 400px) {
+    .timer-text {}
 }
 
-@media screen and (max-width: 300px){
-    .timer-text{
+@media screen and (max-width: 300px) {
+    .timer-text {}
+}
 
-    }
+@font-face {
+    font-family: "Code";
+    /*Can be any text*/
+    src: local("CascadiaMono"),
+        url("../fonts/CascadiaMono.ttf") format("truetype");
+}
+
+.encouragement-message-2 {
+    font-family: "Merriweather", sans-serif;
+}
+
+.terminal-container {
+    font-family: "Code", sans-serif;
+}
+
+.encouragement-message-1 {
+    font-family: "Merriweather", sans-serif;
 }

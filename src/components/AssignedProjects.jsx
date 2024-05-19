@@ -8,7 +8,14 @@ const RandomProjects = () => {
   const [randomProjects, setRandomProjects] = useState([]);
 
   useEffect(() => {
-    setRandomProjects(getRandomProjects(projectsData));
+    const savedProjects = localStorage.getItem("assignedProjects");
+    if (savedProjects) {
+      setRandomProjects(JSON.parse(savedProjects));
+    } else {
+      const newProjects = getRandomProjects(projectsData);
+      setRandomProjects(newProjects);
+      localStorage.setItem("assignedProjects", JSON.stringify(newProjects));
+    }
   }, []);
 
   const getRandomProjects = (projects) => {

@@ -1,0 +1,52 @@
+.assigned-projects-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    /* Add any padding or margins as needed */
+}
+
+.top-section {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    /* Center the items */
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    /* Add space between mystery box and terminal */
+}
+
+.mystery-box-container {
+    /* Remove flex: 1 and scale */
+    margin-right: 0;
+    /* Remove unnecessary margin */
+}
+
+.terminal-container {
+    /* Remove flex: 1, width, and margin-top */
+}
+
+.projects-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.timer-section {
+    text-align: center;
+}
+
+/* Responsive adjustments using Flexbox */
+@media (max-width: 768px) {
+    .top-section {
+        flex-direction: column;
+        /* Stack vertically on smaller screens */
+    }
+
+    /* Remove width and margin-bottom for smaller screens */
+    .mystery-box-container,
+    .terminal-container {
+        width: auto;
+        margin-bottom: 0;
+    }
+}

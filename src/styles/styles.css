@@ -3,3 +3,8 @@ body {
     color: #222529;
     /* Optional: ensures text is visible on the black background */
 }
+
+* {
+    padding: 0;
+    margin: 0;
+}

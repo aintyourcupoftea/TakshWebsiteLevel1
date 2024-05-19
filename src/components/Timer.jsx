@@ -5,6 +5,16 @@ const Timer = () => {
   const [time, setTime] = useState(48 * 60 * 60); // 48 hours in seconds
 
   useEffect(() => {
+    const savedStartTime = localStorage.getItem("timerStartTime");
+    if (savedStartTime) {
+      const startTime = new Date(savedStartTime).getTime();
+      const currentTime = new Date().getTime();
+      const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+      setTime((prevTime) => prevTime - elapsedTime);
+    } else {
+      localStorage.setItem("timerStartTime", new Date());
+    }
+
     const countdown = setInterval(() => {
       setTime(prevTime => {
         if (prevTime <= 0) {
