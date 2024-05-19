@@ -5,7 +5,9 @@ import mysteryAnimation1 from "../assets/mysterybox_part1.json"; // First animat
 import mysteryAnimation2 from "../assets/mysterybox.json"; // Second animation
 import TerminalTextBubble from "./TerminalTextBubble";
 import Timer from './Timer'; // Import Timer component
+import RandomProjects from '../components/AssignedProjects'; // Import RandomProjects component
 import '../styles/guide.css';
+import Arrow from "../components/Arrow";
 
 const steps = [
     "Hey 👋",
@@ -72,9 +74,13 @@ const Guide = () => {
                         {boxOpened ? (
                             <>
                                 <div className="timer-text">
+                                {timerStarted && <Timer startFrom={48 * 60 * 60} />} {/* Render Timer when started */}
+
                                     <p>Complete the projects before timer runs out! ⏳</p>
-                                    {timerStarted && <Timer startFrom={48 * 60 * 60} />} {/* Render Timer when started */}
                                 </div>
+                                {/* Show the RandomProjects component only after the box is opened */}
+                                <Arrow />
+                                <RandomProjects />
                             </> 
                         ) : (
                             <>

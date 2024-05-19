@@ -1,0 +1,8 @@
+.arrow-lottie{
+    rotate: 135deg;
+    position: absolute;
+    top: 40%;
+    left: -40%;
+    scale: 3;
+    z-index: -1;
+}
