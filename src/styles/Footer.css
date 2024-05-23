@@ -1,60 +1,67 @@
 /* Footer.css */
 
 @font-face {
-    font-family: "Taksh";
-    src: local("FMBolyarSansPro-400"),
-        url("../fonts/FMBolyarSansPro-400.ttf") format("truetype");
+    font-family: 'Taksh';
+    src: local('FMBolyarSansPro-400'),
+        url('../fonts/FMBolyarSansPro-400.ttf') format('truetype');
 }
 
+/* Styles for the page structure (put this in your main CSS file) */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Ensure page takes full viewport height */
+}
+
+.content-wrapper {
+    flex-grow: 1;
+    /* Content will grow to take available space */
+}
+
+/* Footer styles */
 footer {
     background-color: rgba(33, 37, 41, 1);
-    /* Light gray background */
-    padding: 20px;
+    padding: 2rem;
     text-align: center;
     font-family: sans-serif;
-    position: fixed;
-    /* Make the footer stay at the bottom */
-    bottom: 0;
-    left: 0;
     width: 100%;
 }
 
 footer p {
     margin: 0;
-    font-size: 14px;
-    color: whitesmoke
-        /* Dark gray text color */
+    font-size: 1rem;
+    color: whitesmoke;
+    line-height: 1.5;
 }
 
 footer span {
     font-weight: bold;
-    /* Make "Taksh" bold */
     color: white;
-    /* Blue color for "Taksh" */
 }
 
 .taksh:hover {
     color: rgb(203, 203, 203);
-    /* Change text color on hover */
+    transition: color 0.3s ease;
 }
 
 .made-with-love {
-    font-family: "Merriweather", serif;
+    font-family: 'Merriweather', serif;
     font-weight: 300;
 }
 
 .taksh {
-    font-family: "Taksh", sans-serif;
-}
-
-.taksh:link {
+    font-family: 'Taksh', sans-serif;
     text-decoration: none;
 }
 
-.taksh:visited {
-    text-decoration: none;
-}
+/* Responsive Styling */
+@media (max-width: 768px) {
+    footer {
+        padding: 1.5rem;
+    }
 
-.taksh:active {
-    text-decoration: none;
+    footer p {
+        font-size: 0.875rem;
+    }
 }

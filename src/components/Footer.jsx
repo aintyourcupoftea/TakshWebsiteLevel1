@@ -5,12 +5,16 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer>
+        <footer className="footer">
             <p>
-                © {currentYear} Taksh. All rights reserved. <br></br>
+                © {currentYear} Taksh. All rights reserved. <br />
                 <span className="made-with-love">
                     Made with ❤️ by&nbsp;
-                    <a href="https://khojcommunity.com/about-1" target="_blank" className="taksh">
+                    <a
+                        href="https://khojcommunity.com/about-1"
+                        target="_blank"
+                        className="taksh"
+                    >
                         Taksh
                     </a>
                 </span>
