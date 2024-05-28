@@ -21,7 +21,7 @@ const RandomProjects = () => {
   const getRandomProjects = (projects) => {
     const keys = Object.keys(projects);
     const shuffled = keys.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 5).map(key => ({ name: key, link: projects[key] }));
+    return shuffled.slice(0, 10).map(key => ({ name: key, link: projects[key] }));
   };
 
   const handleProjectClick = (link) => {
@@ -33,7 +33,7 @@ const RandomProjects = () => {
       {randomProjects.length > 0 ? (
         <div>
           {randomProjects.map((project, index) => (
-            <Button
+            <Button 
               key={index}
               variant="primary"
               className="project-buttons mb-2 mr-2"

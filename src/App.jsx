@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="page-container"> {/* Add the page container */}
       <NavBar />
+      <Guide />
       <div className="content-wrapper"> {/* Add content wrapper */}
-        <Guide />
+        {/* <Footer /> */}
       </div>
-      <Footer />
     </div>
   );
 }

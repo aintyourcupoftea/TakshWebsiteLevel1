@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Lottie from "lottie-react";
+import { Button } from "react-bootstrap";
 import chief from "../assets/guide.json";
 import mysteryAnimation1 from "../assets/mysterybox_part1.json";
 import mysteryAnimation2 from "../assets/mysterybox.json";
@@ -11,9 +12,8 @@ import '../styles/guide.css';
 import Arrow from "../components/Arrow";
 import '../styles/afterProjectsAssignned.css';
 import '../styles/styles.css';
-
-// Make sure to import your projects data here
 import projectsData from '../assets/projects.json';
+import FeedbackForm from "./FeedbackForm";
 
 const steps = [
     "Hey 👋",
@@ -34,6 +34,8 @@ const Guide = () => {
     const [timerStarted, setTimerStarted] = useState(false);
     const [projectsAssigned, setProjectsAssigned] = useState(false);
     const animationRef = useRef(null);
+    const [isButtonActive, setIsButtonActive] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
     useEffect(() => {
         const assignedProjects = localStorage.getItem("assignedProjects");
@@ -106,7 +108,21 @@ const Guide = () => {
     const getRandomProjects = (projects) => {
         const keys = Object.keys(projects);
         const shuffled = keys.sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, 5).map(key => ({ name: key, link: projects[key] }));
+        return shuffled.slice(0, 10).map(key => ({ name: key, link: projects[key] }));
+    };
+
+    const handleTimerEnd = () => {
+        setIsButtonActive(true);
+    };
+
+    const handleButtonClick = () => {
+        if (isButtonActive) {
+            setIsModalOpen(true);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     const style = {
@@ -124,7 +140,6 @@ const Guide = () => {
 
     return (
         <div className="guide-container">
-
             {projectsAssigned ? (
                 <div className="assigned-projects-view">
                     <div className="top-section">
@@ -149,7 +164,16 @@ const Guide = () => {
                         <div className="projects-container"> {/* Projects above the timer */}
                             <RandomProjects />
                         </div>
-                        <Timer startFrom={48 * 60 * 60} />
+                        <Timer startFrom={1 * 1 * 10} />
+                        <Button
+                            variant="primary"
+                            onClick={handleButtonClick}
+                            disabled={!isButtonActive}
+                        >
+                            Submit Feedback
+                        </Button>
+
+                        <FeedbackForm isOpen={isModalOpen} closeModal={handleCloseModal} />
                     </div>
                 </div>
             ) : (
@@ -159,11 +183,20 @@ const Guide = () => {
                             {boxOpened ? (
                                 <>
                                     <div className="timer-text">
-                                        {timerStarted && <Timer startFrom={48 * 60 * 60} />}
+                                        {timerStarted && <Timer startFrom={1 * 1 * 10} onTimerEnd={handleTimerEnd} />}
                                         <p>Complete the projects before timer runs out! ⏳</p>
                                     </div>
                                     <Arrow />
                                     <RandomProjects />
+                                    <Button
+                                        variant="primary"
+                                        onClick={handleButtonClick}
+                                        disabled={!isButtonActive}
+                                        
+                                    >
+                                        Submit Feedback
+                                    </Button>
+                                    <FeedbackForm isOpen={isModalOpen} closeModal={handleCloseModal} />
                                 </>
                             ) : (
                                 <div className="encouragement-message-1">
@@ -184,7 +217,6 @@ const Guide = () => {
                                 ref={animationRef}
                                 onClick={handleMysteryBoxClick}
                             />
-
                         </div>
                     ) : (
                         <div className="lottie-container slide-fade-in-animation">
@@ -212,4 +244,4 @@ const Guide = () => {
     );
 };
 
-export default Guide; 
+export default Guide;
