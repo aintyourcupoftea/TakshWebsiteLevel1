@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Badge from 'react-bootstrap/Badge';
 
-const Timer = () => {
-  const [time, setTime] = useState(48 * 60 * 60); // 48 hours in seconds
+const Timer = ({ startFrom, onTimerEnd }) => {
+  const [time, setTime] = useState(startFrom); // Initialize with the startFrom prop
 
   useEffect(() => {
     const savedStartTime = localStorage.getItem("timerStartTime");
@@ -19,6 +19,7 @@ const Timer = () => {
       setTime(prevTime => {
         if (prevTime <= 0) {
           clearInterval(countdown);
+          if (onTimerEnd) onTimerEnd(); // Call onTimerEnd when timer ends
           return 0;
         }
         return prevTime - 1;
@@ -26,7 +27,7 @@ const Timer = () => {
     }, 1000);
 
     return () => clearInterval(countdown);
-  }, []);
+  }, [onTimerEnd]);
 
   const formatTime = (seconds) => {
     const hrs = Math.floor(seconds / 3600);
